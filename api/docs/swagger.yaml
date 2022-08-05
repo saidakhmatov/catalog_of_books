@@ -1,0 +1,508 @@
+basePath: /api/v1
+definitions:
+  models.CreateAuthor:
+    properties:
+      firstname:
+        example: John
+        type: string
+      lastname:
+        example: Doe
+        type: string
+    required:
+    - firstname
+    - lastname
+    type: object
+  models.CreateBook:
+    properties:
+      author_id:
+        example: author_id
+        type: string
+      book_name:
+        example: bookname
+        type: string
+      category_id:
+        example: uuid1234
+        type: string
+    required:
+    - author_id
+    - book_name
+    - category_id
+    type: object
+  models.CreateBookCategory:
+    properties:
+      category_name:
+        example: psychology
+        type: string
+    required:
+    - category_name
+    type: object
+  models.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  models.UpdateAuthor:
+    properties:
+      firstname:
+        example: John Updated
+        type: string
+      lastname:
+        example: Doe Updated
+        type: string
+    type: object
+  models.UpdateBook:
+    properties:
+      author_id:
+        example: uuid1234
+        type: string
+      book_name:
+        example: Book Name Updated
+        type: string
+      category_id:
+        example: uuid1234
+        type: string
+    type: object
+  models.UpdateBookCategory:
+    properties:
+      category_name:
+        example: psychology
+        type: string
+    required:
+    - category_name
+    type: object
+info:
+  contact:
+    email: saidakhmatov99@gmail.com
+    name: API Support
+    url: http://t.me/saidakhmatov
+  description: Library
+  title: Catalog of Books.
+  version: "1.0"
+paths:
+  /authors:
+    get:
+      operationId: get_all_authors_id
+      parameters:
+      - description: Search Query
+        in: query
+        name: search
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get all authors
+      tags:
+      - Author
+    post:
+      consumes:
+      - application/json
+      description: Create an author
+      operationId: create_author
+      parameters:
+      - description: Author Body
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateAuthor'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Create an author
+      tags:
+      - Author
+  /authors/{id}:
+    delete:
+      operationId: delete_author_id
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete an author by id
+      tags:
+      - Author
+    get:
+      operationId: get_author_id
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get author by ID
+      tags:
+      - Author
+    put:
+      consumes:
+      - application/json
+      operationId: update_author_id
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Model
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateAuthor'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Update Author
+      tags:
+      - Author
+  /book_category:
+    get:
+      operationId: get_all_book_categories
+      parameters:
+      - description: Search Query
+        in: query
+        name: search
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Get all book categories
+      tags:
+      - BookCategory
+    post:
+      consumes:
+      - application/json
+      description: has no relation with others
+      operationId: create_book_category_id
+      parameters:
+      - description: Author Body
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateBookCategory'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Create a book category
+      tags:
+      - BookCategory
+  /book_category/{id}:
+    delete:
+      operationId: delete_book_category_id
+      parameters:
+      - description: Book Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete an book category by id
+      tags:
+      - BookCategory
+    get:
+      operationId: get_book_category_id
+      parameters:
+      - description: Book Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Get book category by ID
+      tags:
+      - BookCategory
+    put:
+      consumes:
+      - application/json
+      operationId: update_author_id
+      parameters:
+      - description: Book Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Model
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateBookCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Update book category
+      tags:
+      - BookCategory
+  /books:
+    get:
+      operationId: get_all_books_id
+      parameters:
+      - description: search
+        in: query
+        name: search
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Some bad request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Get all books
+      tags:
+      - Book
+    post:
+      consumes:
+      - application/json
+      description: has no relation with others
+      operationId: create_book_id
+      parameters:
+      - description: Book Body
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateBook'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Create a book
+      tags:
+      - Book
+  /books/{id}:
+    delete:
+      operationId: delete_book_id
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete an book by id
+      tags:
+      - Book
+    get:
+      operationId: get_book_id
+      parameters:
+      - description: Book Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Response
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Get book by ID
+      tags:
+      - Book
+    put:
+      consumes:
+      - application/json
+      operationId: update_book_id
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Model
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateBook'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: SUccess REsponse
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request Error
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Update book
+      tags:
+      - Book
+swagger: "2.0"
